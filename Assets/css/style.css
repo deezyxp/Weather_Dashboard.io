@@ -5,57 +5,43 @@ body {
 .navbar {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 40px;
-    text-align: left;
-    background-color:  #a2a7e2;
+    text-align: center;
+    background-color:  #cc7ef0;
     display: block;
+    padding-left: 10px;
 }
 
 .navbar-text {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 40px;
     text-align: left;
-    color:  #050404;
+    background-color:  #eff5f7;
     padding-left: 15px;
     /* margin-left: auto;  */
 }
 
-.nav {
-    display: flex;
-    justify-content: left;
-    list-style: none;
-}
-
-
 #weather-dashboard {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 42px;
-    background: #a2a7e2;
-    color:  #f1fcfb;
+    background: #cc7ef0;
+    color:  #e6f0ef;
     line-height: 50px;
     font-kerning: auto;
 }
 
-.card {
-    border: none;
-}
-
 .jumbotron {
-    background-color: #b8dbd9;
-}
-
-.navbar-light {
-    background-color: #e6ebe0;
+    background-color: #d8b8db;
 }
 
 .city-btn {
-    background-color: #5e6572;
+    background-color: #cc5f9b;
 }
 
 .card-body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #087E8B;
+    background-color: #ce6abd;
     font-size: 16pt;
-    color: white;
+    color: rgb(255, 255, 255);
     display: inline-block;
     border: solid #1b998b 2px;
     margin: 20px;
@@ -74,14 +60,14 @@ body {
     font-size: 34px;
     border: none;
     display: inline-block;
-    float: left;
 }
 
-.lead {
+.main {
     padding-left: 25px;
     padding-top: 25px;
     padding-bottom: 0px;
     margin-bottom: 0px;
+    font-size: medium;
 }
 
 .city-weather {
@@ -96,8 +82,9 @@ body {
     float: left;
 }
 
-#mainsearch {
+#searchtitle {
     margin-right: 25px;
+    font-size: large;
 }
 
 #li {
@@ -120,7 +107,6 @@ h1 {
 .card {
     position: relative;
     display: inline-block;
-    float: right;
 }
 
 .cardbody {
@@ -129,22 +115,22 @@ h1 {
     flex-direction: row;
 }
 
-.badge-success {
+.green {
     background-color: darkgreen;
 }
 
-.badge-mild {
+.yellow {
     background-color: yellow;
 }
 
-.badge-warning {
+.orange {
     background-color: orange;
 }
 
-.badge-veryhigh {
+.red {
     background-color: red;
 }
 
-.badge-danger {
-    background-color: darkmagenta;
+.purple {
+    background-color: purple;
 }

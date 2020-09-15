@@ -1,23 +1,22 @@
-let city = $(".city");
-let wind = $(".wind");
-let humidity = $(".humidity");
-let temp = $(".temp");
+var city = $(".city");
+var wind = $(".wind");
+var humidity = $(".humidity");
+var temp = $(".temp");
 
 //array search terms are pushed to
 let searchArr = [];
-let APIKey = "&appid=b9330bfd0b1bf5fe0c849c27df315565";
+let APIKey = "&appid=99ec80a16e351615c5026d1ba095cfb8";
 
 $(document).ready(function () {
     renderSearchList();
 
     $("#searchBtn").click(function (event) {
         event.preventDefault();
-        //grab search term from input search field
         let searchTerm = $("#search").val().trim();
-        triggerSearch(searchTerm);
+        startSearch(searchTerm);
     })
 
-    function triggerSearch(citySearch) {
+    function startSearch(citySearch) {
         //construct the URL
         let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
             citySearch + APIKey;
@@ -38,22 +37,22 @@ $(document).ready(function () {
                 localStorage.setItem("cities", JSON.stringify(searchArr));
             }
             //transfer content to HTML
-            let cityName = $(".jumbotron").addClass("city-weather").text(citySearch + " Weather Details  ");
+            let cityName = $(".jumbotron").addClass("city-weather").text(citySearch);
             let currentDate = moment().format("  MM-DD-YYYY");
-            let windData = $("<p>").text("Wind Speed: " + response.wind.speed).addClass("lead");
-            let humidityData = $("<p>").text("Humidity: " + response.main.humidity + "%").addClass("lead");
+            let windData = $("<p>").text("Wind Speed: " + response.wind.speed).addClass("main");
+            let humidityData = $("<p>").text("Humidity: " + response.main.humidity + "%").addClass("main");
             var iconcode = response.weather[0].icon;
             var iconurl = "https://openweathermap.org/img/w/" + iconcode + ".png";
             let weatherImg = $("<img>").attr("src", iconurl);
-            let date = $("<p>").text(moment.unix().format("MMM Do YY")).addClass("lead");
+            let date = $("<p>").text(moment.unix().format("MMM Do YY")).addClass("main");
             $("#five-day").empty();
             // Convert the temp to fahrenheit
             let tempF = (response.main.temp - 273.15) * 1.80 + 32;
             let roundedTemp = Math.floor(tempF);
 
             //temp elements added to html
-            let tempData = $("<p>").text("Temp (K): " + response.main.temp + "°").addClass("lead");
-            let tempDataF = $("<p>").text("Temp (F): " + roundedTemp + "°").addClass("lead");
+            let tempData = $("<p>").text("Temp (K): " + response.main.temp + "°").addClass("main");
+            let tempDataF = $("<p>").text("Temp (F): " + roundedTemp + "°").addClass("main");
 
             //append the elements together
             cityName.append(weatherImg, currentDate, windData, humidityData, tempData, tempDataF);
@@ -67,19 +66,19 @@ $(document).ready(function () {
                 type: "GET",
                 url: uvIndexURL,
             }).then(function (responseUV) {
-                let currentUV = $("<div>").addClass('lead uv-index').text("UV Index: ");
+                let currentUV = $("<div>").addClass('main uv-index').text("UV Index: ");
                 let uvValue = $("<span class='badge id='current-uv-level'>").text(responseUV.value);
                 currentUV.append(uvValue);
                 if (responseUV.value >= 0 && responseUV.value < 3) {
-                    $(uvValue).addClass("badge-success");
+                    $(uvValue).addClass("green");
                 } else if (responseUV.value >= 3 && responseUV.value < 6) {
-                    $(uvValue).addClass("badge-mild");
+                    $(uvValue).addClass("yellow");
                 } else if (responseUV.value >= 6 && responseUV.value < 8) {
-                    $(uvValue).addClass("badge-warning");
+                    $(uvValue).addClass("orange");
                 } else if (responseUV.value >= 8 && responseUV.value < 11) {
-                    $(uvValue).addClass("badge-veryhigh");
+                    $(uvValue).addClass("red");
                 } else if (responseUV.value >= 11) {
-                    $(uvValue).addClass("badge-danger");
+                    $(uvValue).addClass("purple");
                 }
                 cityName.append(currentUV);
                 renderSearchList();
@@ -128,7 +127,7 @@ $(document).ready(function () {
     $(document).on("click", ".city-btn", function () {
         JSON.parse(localStorage.getItem("cities"));
         let citySearch = $(this).text();
-        triggerSearch(citySearch);
+        startSearch(citySearch);
     });
 
     function renderSearchList() {
