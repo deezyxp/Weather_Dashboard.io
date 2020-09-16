@@ -3,10 +3,11 @@ var wind = $(".wind");
 var humidity = $(".humidity");
 var temp = $(".temp");
 
-//array search terms are pushed to
+// Create an array for search items to go to
 let searchArr = [];
 let APIKey = "&appid=99ec80a16e351615c5026d1ba095cfb8";
 
+// Create page render function
 $(document).ready(function () {
     renderSearchList();
 
@@ -17,13 +18,12 @@ $(document).ready(function () {
     })
 
     function startSearch(citySearch) {
-        //construct the URL
+        // QueryURL key
         let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
             citySearch + APIKey;
 
-        //add search term to top of list of cities
         $("<button>").text(citySearch).prepend(".list-group-item");
-        //ajax call for local weather
+        //AJAX to obtain weather
         $.ajax({
             type: "GET",
             url: queryURL
@@ -36,7 +36,7 @@ $(document).ready(function () {
                 searchArr.push(response.name)
                 localStorage.setItem("cities", JSON.stringify(searchArr));
             }
-            //transfer content to HTML
+        //    code to transfer to HTML
             let cityName = $(".jumbotron").addClass("city-weather").text(citySearch);
             let currentDate = moment().format("  MM-DD-YYYY");
             let windData = $("<p>").text("Wind Speed: " + response.wind.speed).addClass("main");
@@ -46,19 +46,19 @@ $(document).ready(function () {
             let weatherImg = $("<img>").attr("src", iconurl);
             let date = $("<p>").text(moment.unix().format("MMM Do YY")).addClass("main");
             $("#five-day").empty();
-            // Convert the temp to fahrenheit
-            let tempF = (response.main.temp - 273.15) * 1.80 + 32;
-            let roundedTemp = Math.floor(tempF);
+            // Convert the temp to Celsius
+            let tempC = (response.main.temp - 273.15)
+            let roundedTemp = Math.floor(tempC);
 
-            //temp elements added to html
+            // Add temperature data to HTML
             let tempData = $("<p>").text("Temp (K): " + response.main.temp + "°").addClass("main");
-            let tempDataF = $("<p>").text("Temp (F): " + roundedTemp + "°").addClass("main");
+            let tempDataC = $("<p>").text("Temp (C): " + roundedTemp + "°").addClass("main");
 
-            //append the elements together
-            cityName.append(weatherImg, currentDate, windData, humidityData, tempData, tempDataF);
+            //Append items together
+            cityName.append(weatherImg, currentDate, windData, humidityData, tempData, tempDataC);
             $("container").append(cityName);
 
-            //ajax call for UV Index
+            //AJAX to obtain UV data
             let latitude = response.coord.lat;
             let longitude = response.coord.lon;
             let uvIndexURL = "https://api.openweathermap.org/data/2.5/uvi?" + APIKey + "&lat=" + latitude + "&lon=" + longitude;
@@ -85,7 +85,7 @@ $(document).ready(function () {
             })
 
             //start 5 day forecast ajax
-            let day5QueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&units=imperial" + APIKey;
+            let day5QueryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&units=metric" + APIKey;
 
             for (let i = 1; i < 6; i++) {
                 $.ajax({
